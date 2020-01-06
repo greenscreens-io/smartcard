@@ -1,0 +1,255 @@
+{
+	"info": {
+		"_postman_id": "f48878f3-9dcf-4beb-bcf0-1946b1bfa42c",
+		"name": "SmartCard",
+		"description": "API for SmartCard test tool\n\nAll binary responses are encoded in Base64. To convert response.data base64 to bytearray use:\nUint8Array.from(atob(base64_string), c => c.charCodeAt(0))\n\nSteps:\n 1. Call /list to initialize SmartCard Context and retrieve list of devices\n 2. Call /connect?id=nnn where nnn = id of device from previous call\n 3. Call optionally /pin to login\n 4. When finished, call /disconnect to release all resources",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:5580/list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5580/list",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"list"
+					]
+				},
+				"description": "List avaialable (connected only) cmart cards "
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5580/connect?id=0",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5580/connect?id=0",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"connect"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Connect to Card by ID.\nCall \"/list\" first to initialize Context (dll load)"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5580/disconnect",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5580/disconnect",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"disconnect"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5580/request",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\" : 1,\n\t\"cla\" : 0,\n\t\"ins\" : 32,\n\t\"p1\" : 0,\n\t\"p2\" : 128,\n\t\"le\" : 0,\n\t\"data\" : \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "javascript"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5580/request",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5580/dob",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5580/dob",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"dob"
+					]
+				},
+				"description": "Get Discovery Object"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5580/bio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5580/bio",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"bio"
+					]
+				},
+				"description": "Get Biometric data"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5580/version",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5580/version",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"version"
+					]
+				},
+				"description": "Get SmartCard version, defaulted for YubiKey"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5580/oid?id=2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5580/oid?id=2",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"oid"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				},
+				"description": "Get Object by ID defiend in Document \r\nNIST.SP.800-73-4.pdf (Table 3, pg. 30)\r\n\r\n0x02 (02) // Card Holder Unique Identifier\r\n0x05 (05) // X.509 Certificate for PIV Authentication 0x9a\r\n0x01 (01) // X.509 Certificate for Card Authentication 0x9e\r\n0x0A (10) // X.509 Certificate for Digital Signature 0x9c\r\n0x0B (11) // X.509 Certificate for Key Management 0x9d\r\n0x22 (34) // Secure Messaging Certificate Signer 0x04"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5580/valid",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5580/valid",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"valid"
+					]
+				},
+				"description": "Check is PIN locked. \nSW2= Cx where x = number of available trials\nor\nCW1 = 90, Cw2 = 00 when authenticated"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5580/pin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5580/pin?id=MTIzNDU2//8=",
+					"host": [
+						"localhost"
+					],
+					"port": "5580",
+					"path": [
+						"pin"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "MTIzNDU2//8="
+						}
+					]
+				},
+				"description": "Send PIN, default 123456 padded 0xff to 8 bytes\r\n\r\nvar ascii = new Uint8Array([49,50,51,52,53,54,255,255]);\r\nvar b64encoded = btoa(String.fromCharCode.apply(null, ascii));"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "61f35fed-83ab-400f-8bf4-ec065e3e90d5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "cbf0a71b-93e4-43b8-b61a-bedf6c1f5fdb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

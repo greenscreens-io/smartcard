@@ -1,0 +1,73 @@
+<html>
+<head>
+	<script src="script.js" async=""></script>
+	<style media="screen">
+		label {
+			font: 1rem 'Fira Sans', sans-serif;
+		}
+
+		input,
+		label {
+			margin: .4rem 0;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h2>Smart Card Test Tool</h2>
+
+	<button type="button" onclick="SmartCard.list()">List</button>
+	<button type="button" onclick="SmartCard.connect()">Connect</button>
+	<button type="button" onclick="SmartCard.disconnect()">Disconnect</button>
+	<button type="button" onclick="SmartCard.version()">Version</button>
+	<button type="button" onclick="SmartCard.dob()">DOB</button>
+	<button type="button" onclick="SmartCard.biometric()">BIO</button>
+	<button type="button" onclick="SmartCard.valid()">Valid</button>
+	<br><br><br>
+
+	<button type="button" onclick="SmartCard.authenticate()">Authenticate</button>
+	<input type="number" id="pin" name="pin" min="1" max="8" value="123456" style="width: 100px;">
+	<br><br><br>
+
+	<table>
+	  <tr>
+		<th>Type</th>
+	    <th>CLS</th>
+	    <th>INS</th>
+	    <th>P1</th>
+	    <th>P2</th>
+	    <th>Le</th>
+	  </tr>
+	  <tr>
+		<td>
+			<select id="type" name="type">
+			  <option value="1">1</option>
+			  <option value="2">2</option>
+			  <option value="3">3</option>
+			  <option value="4">4</option>
+			</select>
+		</td>
+	    <td><input type="number" id="cls" name="cls" min="1" max="1" value="0"></td>
+	    <td><input type="number" id="ins" name="ins" min="1" max="1" value="0"></td>
+	    <td><input type="number" id="p1" name="p1" min="1" max="1" value="0"></td>
+	    <td><input type="number" id="p2" name="p2" min="1" max="1" value="0"></td>
+	    <td><input type="number" id="le" name="le" min="1" max="1" value="0"></td>
+	  </tr>
+	  <tr>
+		  <td>Data:	</td>
+		<td colspan="5"><input id="data" name="data" style="width: 100%;"></td>
+	  </tr>
+	</table>
+
+	<br>
+	<button type="button" onclick="SmartCard.send()">Send</button>
+	<button type="button" onclick="SmartCard.clear()">Clear</button>
+
+	<br><br>
+	<textarea rows="15" cols="150" readonly style="background: #F5F5F5;"></textarea>
+
+	<br><br>
+	<small style="color: darkgray;font-family: monospace;">&copy;2015-2020. Green Screens Ltd. www.greenscreens.io</small>
+</body>
+</html>
