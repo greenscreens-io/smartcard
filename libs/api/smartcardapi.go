@@ -14,6 +14,7 @@ import (
 
 const noCardDetected = "No smartcards detected"
 const noCardInit = "card not initialized"
+const invalidCommand = "invalid command type"
 
 var cardContext *smartcard.Context
 var activeCard *smartcard.Card
@@ -269,7 +270,7 @@ func SmartCardCommand(typ int, cls int, ins int, p1 int, p2 int, data []byte, le
 	case 4:
 		resp, err = smartCardCommand4(byte(cls), byte(ins), byte(p1), byte(p2), data, byte(le))
 	default:
-		err = errors.New("invalid command type")
+		err = errors.New(invalidCommand)
 	}
 
 	if err == nil {
