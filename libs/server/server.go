@@ -8,12 +8,8 @@ package server
 import (
 	"log"
 	"net/http"
-	"golang.org/x/time/rate"
 )
 
-// limit to one request / second, no bursts
-// to prevent DoS
-var limiter = rate.NewLimiter(1, 1)
 
 // Initialize URL routes for handling printer
 func initRoutes(security bool) {
