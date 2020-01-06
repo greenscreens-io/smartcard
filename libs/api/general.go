@@ -33,19 +33,19 @@ func readData(card *smartcard.Card, data smartcard.ResponseAPDU) ([] byte) {
 
 // commandGETLe - call GET function wth expected length response
 func commandGETLe(card *smartcard.Card, data []byte, len byte) (smartcard.ResponseAPDU, error) {
-	var apdu = smartcard.Command4(0x00, 0xcb, 0x3f, 0xff, data, len)
+	apdu := smartcard.Command4(0x00, 0xcb, 0x3f, 0xff, data, len)
 	return command(card, apdu)
 }
 
 // commandGET - call GET function
 func commandGET(card *smartcard.Card, data []byte) (smartcard.ResponseAPDU, error) {
-	var apdu = smartcard.Command3(0x00, 0xcb, 0x3f, 0xff, data)
+	apdu := smartcard.Command3(0x00, 0xcb, 0x3f, 0xff, data)
 	return command(card, apdu)
 }
 
 // commandRESPLe - command to receive remaining data
 func commandRESPLe(card *smartcard.Card, len byte) (smartcard.ResponseAPDU, error) {
-	var apdu = smartcard.Command2(0x00, 0xc0, 0x00, 0x00, len)
+	apdu := smartcard.Command2(0x00, 0xc0, 0x00, 0x00, len)
 	return command(card, apdu)
 }
 
