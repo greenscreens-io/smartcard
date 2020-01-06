@@ -1,7 +1,8 @@
 Smart Card Test Tool
 ===================
 
-Smart Card Test Tool is simple Web Service written in GO for testing PIV Applets in Smart Card.  For more info search for ISO7816-4.
+Smart Card Test Tool is simple Web Service written in GO for testing PIV Applets in Smart Card. 
+For more info search for ISO7816-4.
 
 ----------
 
