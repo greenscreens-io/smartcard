@@ -12,6 +12,9 @@ import (
 	"github.com/sf1/go-card/smartcard"
 )
 
+const noCardDetected = "No smartcards detected"
+const noCardInit = "card not initialized"
+
 var cardContext *smartcard.Context
 var activeCard *smartcard.Card
 
@@ -63,7 +66,7 @@ func SmartCardList() ([]Device, error) {
 	readers, err := ctx.ListReadersWithCard()
 
 	if len(readers) == 0 {
-		return nil, errors.New("No smartcards detected")
+		return nil, errors.New(noCardDetected)
 	}
 
 	for i, reader := range readers {
@@ -87,7 +90,7 @@ func SmartCardConnect(id int) ([]byte, error) {
 	}
 
 	if len(rdrs) == 0 {
-		return nil, errors.New("No smartcards detected")
+		return nil, errors.New(noCardDetected)
 	}
 
 	card, err := rdrs[id].Connect()
@@ -120,7 +123,7 @@ func SmartCardVersion() (SmartCardResponse, error) {
 	var result SmartCardResponse
 
 	if activeCard == nil {
-		return result, errors.New("card not initialized")
+		return result, errors.New(noCardInit)
 	}
 
 	resp, err = commandVersion(activeCard)
@@ -142,7 +145,7 @@ func SmartCardBIO() (SmartCardResponse, error) {
 	var result SmartCardResponse
 
 	if activeCard == nil {
-		return result, errors.New("card not initialized")
+		return result, errors.New(noCardInit)
 	}
 
 	resp, err = commandBIO(activeCard)
@@ -165,7 +168,7 @@ func SmartCardDiscoveryObject() (SmartCardResponse, error) {
 	var result SmartCardResponse
 
 	if activeCard == nil {
-		return result, errors.New("card not initialized")
+		return result, errors.New(noCardInit)
 	}
 
 	resp, err = commandDOB(activeCard)
@@ -187,7 +190,7 @@ func SmartCardPINTrials() (SmartCardResponse, error) {
 	var result SmartCardResponse
 
 	if activeCard == nil {
-		return result, errors.New("card not initialized")
+		return result, errors.New(noCardInit)
 	}
 
 	resp, err = commandPinRetry(activeCard)
@@ -209,7 +212,7 @@ func SmartCardPIN(data []byte) (SmartCardResponse, error) {
 	var result SmartCardResponse
 
 	if activeCard == nil {
-		return result, errors.New("card not initialized")
+		return result, errors.New(noCardInit)
 	}
 
 	resp, err = commandPin(activeCard, data)
@@ -231,7 +234,7 @@ func SmartCardOID(data int) (SmartCardResponse, error) {
 	var result SmartCardResponse
 
 	if activeCard == nil {
-		return result, errors.New("card not initialized")
+		return result, errors.New(noCardInit)
 	}
 
 	resp, err = commandOID(activeCard, byte(data))
@@ -253,7 +256,7 @@ func SmartCardCommand(typ int, cls int, ins int, p1 int, p2 int, data []byte, le
 	var result SmartCardResponse
 
 	if activeCard == nil {
-		return result, errors.New("card not initialized")
+		return result, errors.New(noCardInit)
 	}
 
 	switch typ {
