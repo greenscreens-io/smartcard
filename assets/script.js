@@ -79,6 +79,10 @@ class SmartCard {
 		return val;
 	}
 
+	static get Oid() {
+		return parseInt(document.querySelector('#oid').value);
+	}
+
 	static get Pin() {
 
 		let val = document.querySelector('#pin').value;
@@ -106,12 +110,14 @@ class SmartCard {
 
 		let response = await fetch(location.origin + url, opt || {});
 
-		let data = null;
+		let data = await response.text();
 
 		if (response.status == 200) {
-			data = await response.json();
-		} else {
-			data = await response.text();
+			try {
+				data = JSON.parse(data)
+			} catch (e) {
+				console.log(e);
+			}
 		}
 
 		SmartCard.log(data);
@@ -173,6 +179,12 @@ class SmartCard {
 	static async dob() {
 		SmartCard.log('Discovery Object...');
 		return SmartCard._recieve('/dob');
+	}
+
+	static async oidIdentifier() {
+		SmartCard.log('Object identifier...');
+		let oid = SmartCard.Oid
+		return SmartCard._recieve(`/oid?id=${oid}`);
 	}
 
 	static clear() {

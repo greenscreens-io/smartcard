@@ -28,6 +28,17 @@
 
 	<button type="button" onclick="SmartCard.authenticate()">Authenticate</button>
 	<input type="number" id="pin" name="pin" min="1" max="8" value="123456" style="width: 100px;">
+	<br><br>
+
+	<select id="oid" name="oid">
+	  <option value="2">Card Holder Unique Identifier</option>
+	  <option value="5">X.509 Certificate for PIV Authentication 0x9a</option>
+	  <option value="1">X.509 Certificate for Card Authentication 0x9e</option>
+	  <option value="10">X.509 Certificate for Digital Signature 0x9c</option>
+	  <option value="11">X.509 Certificate for Key Management 0x9d</option>
+	  <option value="34">Secure Messaging Certificate Signer 0x04</option>
+	</select>
+	<button type="button" onclick="SmartCard.oidIdentifier()">Get OID</button>
 	<br><br><br>
 
 	<table>

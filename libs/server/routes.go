@@ -37,7 +37,7 @@ func routeSmartCardList(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	} else {
 		json, _ := json.Marshal(devices)
-		msg := fmt.Sprintf(`{"success" : true, "data" : "%s"}`, string(json))
+		msg := fmt.Sprintf(`{"success" : true, "data" : %s}`, string(json))
 		fmt.Fprintln(w, msg)
 	}
 
@@ -198,7 +198,7 @@ func sendResponse(w http.ResponseWriter, r *http.Request, resp api.SmartCardResp
 		return
 	}
 
-	msg := fmt.Sprintf(`{"success" : true, "data" : "%s"}`, string(b))
+	msg := fmt.Sprintf(`{"success" : true, "data" : %s}`, string(b))
 	fmt.Fprintln(w, msg)
 
 }
