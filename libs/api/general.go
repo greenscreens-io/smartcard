@@ -17,7 +17,7 @@ import (
 //   G E N E R I C  C O M M A N D S
 //**************************************************************************
 
-// readData - read all data and marege into single byte array
+// readData - read all data and merege into single byte array
 func readData(card *smartcard.Card, data smartcard.ResponseAPDU) ([] byte) {
 
 	var res = data
@@ -31,7 +31,7 @@ func readData(card *smartcard.Card, data smartcard.ResponseAPDU) ([] byte) {
 	return bb.Bytes()
 }
 
-// commandGETLe - call GET function wth expected length response
+// commandGETLe - call GET function with expected length response
 func commandGETLe(card *smartcard.Card, data []byte, len byte) (smartcard.ResponseAPDU, error) {
 	apdu := smartcard.Command4(0x00, 0xcb, 0x3f, 0xff, data, len)
 	return command(card, apdu)
@@ -43,7 +43,7 @@ func commandGET(card *smartcard.Card, data []byte) (smartcard.ResponseAPDU, erro
 	return command(card, apdu)
 }
 
-// commandRESPLe - command to receive remaining data
+// commandRESPLe - command to recieve remaining data
 func commandRESPLe(card *smartcard.Card, len byte) (smartcard.ResponseAPDU, error) {
 	apdu := smartcard.Command2(0x00, 0xc0, 0x00, 0x00, len)
 	return command(card, apdu)
