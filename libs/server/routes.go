@@ -145,21 +145,6 @@ func routeSmartCardCommand(w http.ResponseWriter, r *http.Request) {
 	sendResponse(w, r, resp, err)
 }
 
-// sendResponseRaw - Send bytes base64 encoded
-func sendResponseRaw(w http.ResponseWriter, r *http.Request, resp []byte, err error) {
-
-	if err != nil {
-		log.Printf(err.Error())
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	sEnc := base64.StdEncoding.EncodeToString(resp)
-	msg := fmt.Sprintf(`{"success" : true, "data" : "%s"}`, sEnc)
-	fmt.Fprintln(w, msg)
-
-}
-
 // getID - Get HTTP Query ID parameter
 func getID(w http.ResponseWriter, r *http.Request) (int, error) {
 
@@ -180,6 +165,20 @@ func getID(w http.ResponseWriter, r *http.Request) (int, error) {
 	}
 
 	return id, err
+}
+
+// sendResponseRaw - Send bytes as hex encoded
+func sendResponseRaw(w http.ResponseWriter, r *http.Request, resp []byte, err error) {
+
+	if err != nil {
+		log.Printf(err.Error())
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	msg := fmt.Sprintf(`{"success" : true, "data" : "%x"}`, resp)
+	fmt.Fprintln(w, msg)
+
 }
 
 // sendResponse - Send smartcard object response to web

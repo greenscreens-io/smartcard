@@ -7,8 +7,8 @@
 package api
 
 import (
-	"errors"
 	"fmt"
+	"errors"
 	"github.com/sf1/go-card/smartcard"
 )
 
@@ -18,19 +18,6 @@ const invalidCommand = "invalid command type"
 
 var cardContext *smartcard.Context
 var activeCard *smartcard.Card
-
-// SmartCardResponse contains data and sw codes
-type SmartCardResponse struct {
-	Sw1  string
-	Sw2  string
-	Data []byte
-}
-
-// Device is list of availabe devices to connect
-type Device struct {
-	ID int
-	Name string
-}
 
 // getContext - retrieve smartcard API context
 func getContext() *smartcard.Context {
@@ -130,9 +117,7 @@ func SmartCardVersion() (SmartCardResponse, error) {
 	resp, err = commandVersion(activeCard)
 
 	if err == nil {
-		result.Sw1 = fmt.Sprintf("%x", resp.SW1())
-		result.Sw2 = fmt.Sprintf("%x", resp.SW2())
-		result.Data = readData(activeCard, resp)
+		result = convert(resp)
 	}
 
 	return result, err
@@ -152,9 +137,7 @@ func SmartCardBIO() (SmartCardResponse, error) {
 	resp, err = commandBIO(activeCard)
 
 	if err == nil {
-		result.Sw1 = fmt.Sprintf("%x", resp.SW1())
-		result.Sw2 = fmt.Sprintf("%x", resp.SW2())
-		result.Data = readData(activeCard, resp)
+		result = convert(resp)
 	}
 
 	return result, err
@@ -175,9 +158,7 @@ func SmartCardDiscoveryObject() (SmartCardResponse, error) {
 	resp, err = commandDOB(activeCard)
 
 	if err == nil {
-		result.Sw1 = fmt.Sprintf("%x", resp.SW1())
-		result.Sw2 = fmt.Sprintf("%x", resp.SW2())
-		result.Data = readData(activeCard, resp)
+		result = convert(resp)
 	}
 
 	return result, err
@@ -197,9 +178,7 @@ func SmartCardPINTrials() (SmartCardResponse, error) {
 	resp, err = commandPinRetry(activeCard)
 
 	if err == nil {
-		result.Sw1 = fmt.Sprintf("%x", resp.SW1())
-		result.Sw2 = fmt.Sprintf("%x", resp.SW2())
-		result.Data = readData(activeCard, resp)
+		result = convert(resp)
 	}
 
 	return result, err
@@ -219,9 +198,7 @@ func SmartCardPIN(data []byte) (SmartCardResponse, error) {
 	resp, err = commandPin(activeCard, data)
 
 	if err == nil {
-		result.Sw1 = fmt.Sprintf("%x", resp.SW1())
-		result.Sw2 = fmt.Sprintf("%x", resp.SW2())
-		result.Data = readData(activeCard, resp)
+		result = convert(resp)
 	}
 
 	return result, err
@@ -241,9 +218,7 @@ func SmartCardOID(data int) (SmartCardResponse, error) {
 	resp, err = commandOID(activeCard, byte(data))
 
 	if err == nil {
-		result.Sw1 = fmt.Sprintf("%x", resp.SW1())
-		result.Sw2 = fmt.Sprintf("%x", resp.SW2())
-		result.Data = readData(activeCard, resp)
+		result = convert(resp)
 	}
 
 	return result, err
@@ -274,10 +249,22 @@ func SmartCardCommand(typ int, cls int, ins int, p1 int, p2 int, data []byte, le
 	}
 
 	if err == nil {
-		result.Sw1 = fmt.Sprintf("%x", resp.SW1())
-		result.Sw2 = fmt.Sprintf("%x", resp.SW2())
-		result.Data = readData(activeCard, resp)
+		result = convert(resp)
 	}
 
 	return result, err
+}
+
+func convert(resp smartcard.ResponseAPDU) (SmartCardResponse) {
+	var result SmartCardResponse
+	data := readData(activeCard, resp)
+	result.Sw1 = fmt.Sprintf("%x", resp.SW1())
+	result.Sw2 = fmt.Sprintf("%x", resp.SW2())
+	result.Data = fmt.Sprintf("%x", data)
+
+	if len(data) > 0 {
+		result.Tlv = decodeBERTLV(data)
+	}
+
+	return result
 }

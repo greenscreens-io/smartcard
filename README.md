@@ -1,8 +1,7 @@
 Smart Card Test Tool
 ===================
 
-Smart Card Test Tool is simple Web Service written in GO for testing PIV Applets in Smart Card. 
-For more info search for ISO7816-4.
+Smart Card Test Tool is simple Web Service written in GO for testing PIV Applets in Smart Card.  For more info search for ISO7816-4.
 
 ----------
 
@@ -16,7 +15,7 @@ If you are using PostMan, you will find API collection definition with all avail
 
 > - Data parameter must be set in HEX through web page.
 > - Data parameter must be set in Base64 encoded HEX array when API is used directly.
-> - Response Data property is Base64 and needs to be decoded into Uint8Array or HEX String.
+> - Response Data property is HEX String.
 
 
 #### <i class="icon-file"></i> SmartCard Info

@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2015, 2016  Green Screens Ltd.
  */
-class SmartCard {
+class SmartCardUtil {
 
 	static toArray(string_data) {
 		return new TextEncoder("utf-8").encode(string_data);
@@ -22,6 +22,9 @@ class SmartCard {
 	static toBase64(uint8_array) {
 		return btoa(String.fromCharCode.apply(null, uint8_array));
 	}
+}
+
+class SmartCard {
 
 	static log(data) {
 
@@ -31,17 +34,16 @@ class SmartCard {
 			return;
 		}
 
-		if (data.data) {
+		let Tlv = data.data ? data.data.Tlv ||null : null;
 
-			if (data.data.Data) {
-				data.hex = SmartCard.toHex(SmartCard.toBinary(data.data.Data));
-			} else if (typeof data.data === 'string') {
-				try {
-					data.hex = SmartCard.toHex(SmartCard.toBinary(data.data));
-				} catch(e) {
-					console.log(e)
+		if (Array.isArray(Tlv)) {
+			Tlv.every(tlv => {
+				if (tlv.Tag === "53") {
+					let hash = SmartCardUtil.toBase64(SmartCardUtil.fromHex(tlv.Data));
+					window.open(location.origin + `/asn1#${hash}`, '_blank');
 				}
-			}
+				return true;
+			});
 		}
 
 		el.value = el.value + '\n' + JSON.stringify(data);
@@ -72,8 +74,8 @@ class SmartCard {
 		let val = document.querySelector('#data').value.trim();
 
 		if (val) {
-			val = SmartCard.fromHex(val);
-			val = SmartCard.toBase64(val);
+			val = SmartCardUtil.fromHex(val);
+			val = SmartCardUtil.toBase64(val);
 		}
 
 		return val;
@@ -86,13 +88,13 @@ class SmartCard {
 	static get Pin() {
 
 		let val = document.querySelector('#pin').value;
-		val = SmartCard.toArray(val.padEnd(8, '\0'));
+		val = SmartCardUtil.toArray(val.padEnd(8, '\0'));
 
 		val.forEach(function(item, i) {
 			if (item == 0) val[i] = 255;
 		});
 
-		return SmartCard.toBase64(val);
+		return SmartCardUtil.toBase64(val);
 	}
 
 	static get command() {
