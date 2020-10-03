@@ -13,8 +13,8 @@ import (
 	"net/http"
 	"encoding/json"
 	"encoding/base64"
-	"greenscreens-io/smartcard/libs/jsondef"
-	"greenscreens-io/smartcard/libs/api"
+	"github.com/greenscreens-io/smartcard/libs/jsondef"
+	"github.com/greenscreens-io/smartcard/libs/api"
 )
 
 const greeting = "Welcome to Green Screens Ltd. Smart Card!"

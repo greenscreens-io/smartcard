@@ -9,7 +9,7 @@ import (
 	"os"
 	"fmt"
 	"log"
-	"greenscreens-io/smartcard/libs/server"
+	"github.com/greenscreens-io/smartcard/libs/server"
 )
 
 var arg *ProgramArgs

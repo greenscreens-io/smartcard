@@ -8,7 +8,7 @@
 package main
 
 import (
-	"greenscreens-io/smartcard/applib"
+	"github.com/greenscreens-io/smartcard/applib"
 )
 
 // Main program entry point
