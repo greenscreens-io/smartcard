@@ -1,6 +1,13 @@
 Smart Card Test Tool
 ===================
 
+![Compile](https://github.com/greenscreens-io/smartcard/workflows/Compile/badge.svg?branch=master) 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/greenscreens-io/smartcard?style=plastic)
+![GitHub](https://img.shields.io/github/license/greenscreens-io/smartcard?style=plastic)
+
+![GitHub Last Commit](https://img.shields.io/github/last-commit/greenscreens-io/smartcard?style=plastic)
+![GitHub Release Date](https://img.shields.io/github/release-date/greenscreens-io/smartcard?style=plastic)
+
 Smart Card Test Tool is simple Web Service written in GO for testing PIV Applets in Smart Card.  For more info search for ISO7816-4.
 
 ----------
