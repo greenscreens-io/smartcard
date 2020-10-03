@@ -13,6 +13,10 @@ Smart Card Test Tool is simple Web Service written in GO for testing PIV Applets
 Instructions
 -------------
 
+Build
+
+`go build -trimpath -ldflags "-s -w"`
+
 Simply start smartcard.exe and open http://localhost:5580 to open test page.
 If you are using PostMan, you will find API collection definition with all available REST URL's
 
